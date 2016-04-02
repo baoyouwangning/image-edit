@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "jest",
-    "coverage": "jest --coverage",
+    "coverage": "jest --coverage && cat ./coverage/lcov.info",
     "build-dev": "webpack --display-modules --diplay-chunks --config webpack.config.dev.js",
     "build": "webpack --display-modules --diplay-chunks --config webpack.config.prod.js",
     "dev": "node dev-server.js",
