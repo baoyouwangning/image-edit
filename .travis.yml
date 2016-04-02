@@ -3,6 +3,6 @@ node_js:
 - 5
 before_script:
 - npm run mocha
-- npm run cov
+- npm run cover
 script: npm run build
 after_success: "< coverage/lcov.info ./node_modules/coveralls/bin/coveralls.js"
