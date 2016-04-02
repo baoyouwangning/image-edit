@@ -1,6 +1,10 @@
 #webstorm settings
 .idea
 
+#build dir
+dist/*
+output
+
 # Logs
 logs
 *.log

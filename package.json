@@ -9,7 +9,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --display-modules --diplay-chunks --config webpack.config.base.js",
+    "build-dev": "webpack --display-modules --diplay-chunks --config webpack.config.dev.js",
+    "build": "webpack --display-modules --diplay-chunks --config webpack.config.prod.js",
     "dev": "node dev-server.js",
     "start": "node dev-server.js"
   },
@@ -37,7 +38,9 @@
     "css-loader": "^0.23.1",
     "expose-loader": "^0.7.1",
     "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.8.5",
     "html-webpack-plugin": "^2.15.0",
+    "less": "^2.6.1",
     "less-loader": "^2.2.3",
     "react": "^0.14.8",
     "react-dom": "^0.14.8",
