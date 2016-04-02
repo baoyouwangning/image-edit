@@ -1,6 +1,7 @@
 var chai = require('chai');
 var assert = require('chai').assert;
 var expect = chai.expect;
+// var getBase64 = require('../../../app/component/image-canvas/getBase64.jsx');
 
 var My = {
     sqrt: function(x) {
