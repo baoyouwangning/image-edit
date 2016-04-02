@@ -9,6 +9,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "mocha": "mocha test/{,**/}*.{js,jsx}",
+    "cover": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info",
     "build-dev": "webpack --display-modules --diplay-chunks --config webpack.config.dev.js",
     "build": "webpack --display-modules --diplay-chunks --config webpack.config.prod.js",
     "dev": "node dev-server.js",
