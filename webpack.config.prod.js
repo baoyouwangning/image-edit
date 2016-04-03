@@ -53,7 +53,9 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
-                'NODE_ENV': "'production'"
+                'NODE_ENV': "'production'",
+                'PORT': 3001,
+                'CDN_URL': "",
             }
         }),
         new webpack.optimize.OccurenceOrderPlugin(),

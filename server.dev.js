@@ -34,13 +34,13 @@ compiler.plugin('compilation', function (compilation) {
     })
 });
 
-// 监听 8080，开启服务器
-app.listen(8080, function (err) {
+//开启服务器
+var port = process.env.PORT || 3001;
+app.listen(port, function (err) {
     if (err) {
-        console.log(err);
         return;
     }
-    console.log('Listening at http://localhost:8080');
+    console.log('Listening at http://localhost:' + port);
 });
 
 

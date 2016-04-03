@@ -4,11 +4,11 @@ var webpack = require('webpack');
 
 module.exports = {
     entry: {
-        main: ['./dev-client','./app/main.js'],
+        main: ['./client.dev','./app/main.js'],
     },
     output: {
-        path: path.resolve(__dirname, 'output/assets'),
-        publicPath: './assets/',
+        path: path.resolve(__dirname, 'output'),
+        publicPath: '/',
         filename: 'bundle.js',
         chunkFilename: 'bundle.js'
     },
@@ -47,7 +47,8 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
-                'NODE_ENV': "'development'"
+                'NODE_ENV': "'development'",
+                'PORT': 3001
             }
         }),
         new webpack.optimize.OccurenceOrderPlugin(),
