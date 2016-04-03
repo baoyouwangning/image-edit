@@ -5,4 +5,4 @@ before_script:
 - npm run test
 - npm run coverage
 script: npm run build
-after_success: "< coverage/lcov-report/*html ./node_modules/coveralls/bin/coveralls.js"
+after_success: "< coverage/lcov.info ./node_modules/coveralls/bin/coveralls.js"
