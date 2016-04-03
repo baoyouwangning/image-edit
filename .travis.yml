@@ -7,3 +7,10 @@ before_script:
 - npm run coverage
 script: npm run build
 after_success: "< coverage/lcov.info ./node_modules/coveralls/bin/coveralls.js"
+deploy:
+  provider: heroku
+  api_key:
+    secure: 0733S7W+3/ZNCUa/kqS6oHBCzem7WlP2nBaMyZRVRgjpbJcO3C4mQH6++or6fFUkw4GVkV3jWBTOl6s0a3TBMUqNDJD3xTn3uya0VFC0JNAg3KpcQdPvPItfu/6NKhxOTasC3GvlM2sxFjYtZ3yXsRLzCTu9KV9wdQfkZkVKRjWSPURu6eEoyUrHE+WFpSl1GH8x+ZoR3xURN8VQky6wXuXoLYHchUPWxisQ8h4msUbIAURdu/GajsYcaj8ybMKowssb1Brc6OoRnc6OM55m/5zKj7C1wTSgTujzVgxxLxPFjaAUahKo9h216wzfdBvG56gnv128imkw9s46YATxiFY87QM5PiTYK32Yt9USrVji208A+wLc5WOFcgP0ysshdaZv6Sxm270UhmyXppx6IFTT/0+JDYS4zbAes90KPa/6QWlPRTwOYa9sWn2drQew4jIZhDbUeMmU3+5ACCwr31GIOGwH84QtBQGDYYPneNDBfpdKRS+ijDGdC+xvceqDbiMWrxJ1cpK9Qx4moFtzm1pEFGdA0KSohaI9IL5SMAV+JkGrKWMSbgQuuqKzj8NrIvnTFL22vPp/febtg8m6R8yYyQR65CV0YeDFcj33joOHLtozXw91tuXcvhrka7VadbVQyumjMka6yoG7C96pFWrfEChZO3emIFFoAdY8TD4=
+  app: image-edit
+  on:
+    repo: baoyouwangning/image-edit
