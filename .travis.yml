@@ -1,5 +1,4 @@
 language: node_js
-repo_token: Mb9CVhxHbtiBWsN5CY2Dop4qqKLUf46Oh
 node_js:
 - 5
 before_script:
