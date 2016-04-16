@@ -1,4 +1,4 @@
-var SubImage = require('./modules/SubImage');
+var SubImage = require('./SubImage');
 
 var image = {
     //获得图片数据URI

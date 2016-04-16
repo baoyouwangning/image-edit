@@ -1,4 +1,4 @@
-import image from './../image';
+import image from './../modules/image';
 import React from 'react';
 import './../style/base.less';
 
