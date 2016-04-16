@@ -1,4 +1,4 @@
-// import Image from './lib/image';
+import image from './image';
 import React from 'react';
 import './style/base.less';
 
