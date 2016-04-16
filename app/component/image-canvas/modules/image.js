@@ -1,61 +1,6 @@
 "use strict";
 
-//首先提供一些通用工具
-var Utils = {
-    //使参数友好混合，找到src中合法的属性并将其值（必须为非isNaN)赋值给dest中对应的属性。
-    mix : function (dest,src) {
-        for( var key in src ) {
-            if( dest.hasOwnProperty(key) && !isNaN(src[key]) && src[key] != "" ) {
-                dest[key] = Number(src[key]);
-            }
-        }
-        return dest;
-    },
-    //创建对象URL
-    createObjectURL : function (blob) {
-        if( window.URL ) {
-            return window.URL.createObjectURL(blob);
-        } else {
-            return null;
-        }
-    },
-    //释放对象URL
-    revokeObjectURL : function (url) {
-        if( window.UEL ) {
-            window.URL.revokeObjectURL(url);
-        }
-    }
-};
 
-//一个抽象的异步类型，object为类型
-var AsynObject = function (object,callback) {
-    this.obj = null;
-    this.superInitialize(object,callback);
-};
-//超类的初始化
-AsynObject.prototype.superInitialize = function (object,callback) {
-    var _this = this;
-    this.obj = new object;
-    this.obj.onload = function(event) {
-        return _this.onload(event,callback);
-    }
-    this.obj.onerror = function (event) {
-        return _this.onerror(event,callback);
-    }
-};
-AsynObject.prototype.onload = function (event,callback) {
-    callback.call(this,1);
-};
-AsynObject.prototype.onerror = function (event,callback) {
-    callback.call(this,0);
-};
-
-//寄生组合式继承，这里使用寄生式继承来继承超类型的原型
-var inheritPrototype = function (subType, superType) {
-    var prototype = Object.create(superType.prototype);
-    prototype.constructor = subType;
-    subType.prototype = prototype;
-};
 
 //读取本地图片文件包装器构造函数
 var SubFileReader = function (file,callback) {
