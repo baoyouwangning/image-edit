@@ -1,5 +1,5 @@
-var AsynObject = require('./AsynObject');
 var inheritPrototype = require('./inheritPrototype');
+var AsynObject = require('./AsynObject');
 
 //跨源请求包装器构造函数
 var CORSRequest = function (url,callback) {

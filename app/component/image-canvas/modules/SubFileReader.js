@@ -1,5 +1,5 @@
-var AsynObject = require('./AsynObject');
 var inheritPrototype = require('./inheritPrototype');
+var AsynObject = require('./AsynObject');
 
 //读取本地图片文件包装器构造函数
 var SubFileReader = function (file,callback) {
