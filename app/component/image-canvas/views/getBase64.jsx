@@ -1,6 +1,6 @@
-import image from './image';
+import image from './../image';
 import React from 'react';
-import './style/base.less';
+import './../style/base.less';
 
 class Hello extends React.Component {
     render() {
@@ -13,4 +13,3 @@ class Hello extends React.Component {
 };
 
 export default Hello;
-
