@@ -1,4 +1,4 @@
-import Hello from 'component/image-canvas/views/getBase64.jsx';
+import Hello from './component/image-canvas/views/getBase64';   
 import React from 'react';
 import ReactDOM from 'react-dom';
 

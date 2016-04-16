@@ -20,7 +20,7 @@ module.exports = {
     },
     externals: undefined,
     resolve: {
-        extensions: ['', '.js']
+        extensions: ['', '.js', '.jsx']
     },
     module: {
         loaders: [
