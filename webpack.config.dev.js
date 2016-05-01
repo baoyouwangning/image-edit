@@ -8,12 +8,12 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, 'output'),
-        publicPath: '/',
+        publicPath: '',
         filename: 'bundle.js',
         chunkFilename: 'bundle.js'
     },
     resolve: {
-        extensions: ['', '.js', '.jsx', '.less'] //遇到.jsx结尾模块（文件）时也要加载
+        extensions: ['', '.js', '.jsx', '.less', '.png'] //遇到.jsx结尾模块（文件）时也要加载
     },
     devtool: 'source-map',
     module: {
@@ -33,7 +33,7 @@ module.exports = {
                 loader: 'url',
                 query: {
                     limit: 25000,
-                    name: '[name].[ext]?[hash:7]'
+                    name: './[name].[ext]?[hash:7]'
                 }
             }, {
                 test: /\.eot|\.ttf|\.woff2?/,

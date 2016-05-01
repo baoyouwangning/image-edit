@@ -6,7 +6,7 @@ var ListGroup = React.createClass({
         return <ul>
             <ListItem content={
         {
-            img: "../../images/b1.png",
+            img: "./b1.png",
             text: "剪裁",
             id: 0
         }

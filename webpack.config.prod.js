@@ -13,14 +13,14 @@ module.exports = {
         ]
     },
     output: {
-        path: path.resolve(__dirname, 'dist/assets'),
-        publicPath: './assets/',
-        filename: '[name].[hash].js',
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: '',
+        filename: './js/[name].[hash].js',
         chunkFilename: '[id].[chunkhash].js'
     },
     externals: undefined,
     resolve: {
-        extensions: ['', '.js', '.jsx']
+        extensions: ['', '.js', '.jsx', '.less']
     },
     module: {
         loaders: [
@@ -39,13 +39,13 @@ module.exports = {
                 loader: 'url',
                 query: {
                     limit: 25000,
-                    name: '[name].[ext]?[hash:7]'
+                    name: './images/[name].[ext]?[hash:7]'
                 }
             }, {
                 test: /\.eot|\.ttf|\.woff2?/,
                 loader: 'file',
                 query: {
-                    name: '[name].[ext]?[hash:7]'
+                    name: './fonts/[name].[ext]?[hash:7]'
                 }
             }
         ]
@@ -61,16 +61,16 @@ module.exports = {
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendors',
-            filename: '[name].js',
+            filename: './js/[name].js',
         }),
-        new ExtractTextPlugin('[name].[contenthash].css'),
+        new ExtractTextPlugin('./styles/[name].[contenthash].css'),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false
             }
         }),
         new HtmlWebpackPlugin({
-            filename: '../index.html',
+            filename: './index.html',
             template: path.resolve(__dirname, 'app/index.html'),
             inject: true
         })

@@ -17,11 +17,22 @@
   & + div {
     margin: 0 0 10px 0;
   }
+
+  // 通过递归实现循环
+  .generate-columns(@n, @i: 1) when (@i =< @n) {
+    &.item-@{i} {
+      background: url("../images/b@{i}.png") left no-repeat;
+    }
+    .generate-columns(@n, (@i + 1));
+  }
+  .generate-columns(6);
+
   &:hover {
     border: 1px solid #bbb;
     background: #fff;
-    img {
-      m: rotate(335deg);
+
+    .items-img {
+      transform: rotate(335deg);
       -webkit-transform: rotate(335deg);
       -webkit-transform-origin: 50% 30%;
       -moz-transform: rotate(335deg);
@@ -30,7 +41,12 @@
   }
 }
 
-.item-0 {
-  background: url("../images/b1.png") left no-repeat;
+.items-img {
+  float: left;
+  width: 16px;
+  height: 16px;
+}
 
+.item-0 {
+  //background: url("../images/tips5.png") left no-repeat;
 }
