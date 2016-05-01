@@ -6,7 +6,7 @@ var webpack = require('webpack');
 
 module.exports = {
     entry: {
-        main: './app/main.js',
+        main: './app/js/main.js',
         vendors: [
             'react',
             'react-dom'
