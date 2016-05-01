@@ -1,0 +1,36 @@
+.items {
+  overflow: hidden;
+  height: 28px;
+  border: 1px solid #E3E3E3;
+  border-radius: 3px;
+  color: #333;
+  padding-left: 20px;
+  margin: 5px 0px;
+  cursor: pointer;
+  background: #EEE;
+  font: 14px/28px "微软雅黑", "宋体";
+  text-shadow: 2px 2px 3px skyblue;
+  img {
+    vertical-align: middle;
+  }
+
+  & + div {
+    margin: 0 0 10px 0;
+  }
+  &:hover {
+    border: 1px solid #bbb;
+    background: #fff;
+    img {
+      m: rotate(335deg);
+      -webkit-transform: rotate(335deg);
+      -webkit-transform-origin: 50% 30%;
+      -moz-transform: rotate(335deg);
+      -moz-transform-origin: 50% 30%;
+    }
+  }
+}
+
+.item-0 {
+  background: url("../images/b1.png") left no-repeat;
+
+}

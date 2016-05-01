@@ -13,7 +13,7 @@ module.exports = {
         chunkFilename: 'bundle.js'
     },
     resolve: {
-        extensions: ['', '.js', '.jsx'] //遇到.jsx结尾模块（文件）时也要加载
+        extensions: ['', '.js', '.jsx', '.less'] //遇到.jsx结尾模块（文件）时也要加载
     },
     devtool: 'source-map',
     module: {

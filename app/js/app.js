@@ -1,5 +1,5 @@
-import Index from './components/Index';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Index from './components/Index';
 
-ReactDOM.render(<Index />, document.getElementById('content'));
+ReactDOM.render(<Index></Index>, document.getElementById('wrap'));

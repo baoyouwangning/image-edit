@@ -1,6 +1,36 @@
-body {
-  background: red;
-  .example {
-    color: yellow;
+* {
+  &, &:before, &:after {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-style: normal;
   }
+}
+
+body {
+  font: 12px/20px "微软雅黑", "黑体", "宋体";
+  color: #444;
+  background: white;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+a:visited {
+  color: #C39;
+}
+
+a:hover {
+  color: red;
+  text-decoration: underline;
+}
+
+a img {
+  border: none;
+}
+
+ul,li {
+  list-style: none;
 }

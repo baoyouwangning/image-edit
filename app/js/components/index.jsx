@@ -1,21 +1,28 @@
 var React = require('react');
-var Header = require('./Header');
+var HeadBar = require('./HeadBar');
+var WorkSpace = require('./WorkSpace');
+require('../../styles/index.less');
 
 var logoInfo = {
-    url: './images/logo.png',
-    alt: '图像编辑工具'
+    // url: './images/logo.png',
+    url: 'https://pic.ws.netease.com/photo/imageMagic3/logo.png',
+    alt: '图像编辑工具',
+    version: "v 0.5"
 };
 
 var Index = React.createClass({
     getInitialState: function () {
         return {
-            header : {
+            headBar : {
                 logo: logoInfo
             }
         }
     },
     render: function () {
-        return <Header content={this.state.header}></Header>
+        return <div className="main">
+            <HeadBar content={this.state.headBar}></HeadBar>
+            <WorkSpace></WorkSpace>
+        </div>
     }
 });
 

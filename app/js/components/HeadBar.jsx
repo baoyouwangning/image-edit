@@ -1,15 +1,16 @@
 var React = require('react');
+require('../../styles/head-bar.less');
 var Logo = require('./Logo');
 
-var Header = React.createClass({
+var HeadBar = React.createClass({
     getInitialState: function () {
         return this.props.content;
     },
     render: function () {
-        return <div>
+        return <div className="head-bar">
             <Logo content={this.state.logo}></Logo>
         </div>
     }
 });
 
-module.exports = Header;
+module.exports = HeadBar;
