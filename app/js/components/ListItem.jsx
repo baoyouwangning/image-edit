@@ -6,10 +6,9 @@ var ListItem = React.createClass({
         return this.props.content;
     },
     render: function () {
+        // var url = "url-loader?mimetype=image/png!./b1.png";
 
-        var url = "url-loader?mimetype=image/png!./b1.png";
-
-        return <li key={this.state.id} className={'items item-' + this.state.id}>
+        return <li className={'items item-' + this.state.id}>
             <div className="items-img"></div>
             {this.state.text}
         </li>

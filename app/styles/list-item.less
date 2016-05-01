@@ -18,15 +18,6 @@
     margin: 0 0 10px 0;
   }
 
-  // 通过递归实现循环
-  .generate-columns(@n, @i: 1) when (@i =< @n) {
-    &.item-@{i} {
-      background: url("../images/b@{i}.png") left no-repeat;
-    }
-    .generate-columns(@n, (@i + 1));
-  }
-  .generate-columns(6);
-
   &:hover {
     border: 1px solid #bbb;
     background: #fff;
@@ -41,10 +32,23 @@
   }
 }
 
+//递归tools背景图
+.generate-columns(@n, @i: 0) when (@i =< @n) {
+  .item-@{i} {
+    .items-img {
+      background: url('../images/b@{i}.png') left no-repeat;
+    }
+  }
+  .generate-columns(@n, (@i + 1));
+}
+.generate-columns(5);
+
 .items-img {
   float: left;
   width: 16px;
   height: 16px;
+  margin-top: 6px;
+  margin-right: 10px;
 }
 
 .item-0 {
