@@ -4,7 +4,7 @@ var webpack = require('webpack');
 
 module.exports = {
     entry: {
-        main: ['./client.dev','./app/js/main.js'],
+        app: ['./client.dev','./app/js/app.js'],
     },
     output: {
         path: path.resolve(__dirname, 'output'),

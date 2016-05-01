@@ -1,14 +1,22 @@
-import React from 'react';
-import '../../styles/base.less';
+var React = require('react');
+var Header = require('./Header');
 
-class Hello extends React.Component {
-    render() {
-        return (
-            <div className="component-wrapper">
-                Hi world!!
-            </div>
-        );
-    }
+var logoInfo = {
+    url: './images/logo.png',
+    alt: '图像编辑工具'
 };
 
-export default Hello;
+var Index = React.createClass({
+    getInitialState: function () {
+        return {
+            header : {
+                logo: logoInfo
+            }
+        }
+    },
+    render: function () {
+        return <Header content={this.state.header}></Header>
+    }
+});
+
+module.exports = Index;

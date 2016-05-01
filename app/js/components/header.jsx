@@ -1,1 +1,15 @@
-// https://pic.ws.netease.com/photo/imageMagic3.jsp?topicid=6REL0001&setid=115573
+var React = require('react');
+var Logo = require('./Logo');
+
+var Header = React.createClass({
+    getInitialState: function () {
+        return this.props.content;
+    },
+    render: function () {
+        return <div>
+            <Logo content={this.state.logo}></Logo>
+        </div>
+    }
+});
+
+module.exports = Header;
