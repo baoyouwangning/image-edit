@@ -1,6 +1,5 @@
-import image from './image-canvas/modules/image';
 import React from 'react';
-import './../style/base.less';
+import '../../styles/base.less';
 
 class Hello extends React.Component {
     render() {
