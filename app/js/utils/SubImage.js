@@ -1,8 +1,18 @@
-var Utils = require('./Utils');
+var ObjectURL = require('./ObjectURL');
 var inheritPrototype = require('./inheritPrototype');
 var AsynObject = require('./AsynObject');
 var SubFileReader = require('./SubFileReader');
 var CORSRequest = require('./CORSRequest');
+
+//使参数友好混合，找到src中合法的属性并将其值（必须为非isNaN)赋值给dest中对应的属性
+var mix = function (dest,src) {
+    for( var key in src ) {
+        if( dest.hasOwnProperty(key) && !isNaN(src[key]) && src[key] != "" ) {
+            dest[key] = Number(src[key]);
+        }
+    }
+    return dest;
+};
 
 //图片包装器构造函数 （注意现阶段url非blob URL)
 var SubImage = function (target,callback) {
@@ -161,7 +171,7 @@ SubImage.prototype.clip = function (config,callback) {
         right : 0,
         bottom : 0
     };
-    Utils.mix(_config,config);
+    mix(_config,config);
 
     //确定剪切区域的宽度
     var _w = img.width - _config.left - _config.right;
@@ -187,7 +197,7 @@ SubImage.prototype.rotate = function (config,callback) {
     var _config = {
         deg : 0   //旋转角度
     }
-    Utils.mix(_config,config);
+    mix(_config,config);
     var _angle = _config.deg * Math.PI / 180;	//转成弧度
 
     var vertexes = [
@@ -243,7 +253,7 @@ SubImage.prototype.transfor = function (config,callback) {
     };
     var _type = _config.type;	//保留默认类型，防止传参类型错误
     var type = config.type;		//调用者要求的格式
-    Utils.mix(_config,config);	//type字段要求非Number不会混合，主要是获得质量等级数
+    mix(_config,config);	//type字段要求非Number不会混合，主要是获得质量等级数
 
     var _types = ["png","jpeg","webp","vnd.ms-photo"];
     //png: IE 9+, Edge, Firefox 1.5+(3除外), Safari 2+, Opera 9+, Chrome, IOS版Safari, Android版WebKit
@@ -276,7 +286,7 @@ SubImage.prototype.watermark = function (config,callback) {
         },
         mark : config.mark
     }
-    Utils.mix(_config.position,config.position);
+    mix(_config.position,config.position);
 
     var doMark = function (status) {  //此时上下文为mark实例
         _this.mark = this;		//给背景SubImage添加mark（mark也是SubImage实例）
