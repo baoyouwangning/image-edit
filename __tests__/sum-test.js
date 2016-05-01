@@ -1,6 +1,6 @@
 'use strict';
 
-jest.unmock('../app/sum'); // unmock to use the actual implementation of sum
+jest.unmock('../app/js/sum'); // unmock to use the actual implementation of sum
 
 describe('sum', () => {
     it('adds 1 + 2 to equal 3', () => {
