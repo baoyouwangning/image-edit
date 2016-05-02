@@ -14,4 +14,3 @@ var Logo = React.createClass({
 });
 
 module.exports = Logo;
-
