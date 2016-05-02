@@ -1,6 +1,7 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
+var image = require('../utils/image');
 
 var AppStore = assign({},EventEmitter.prototype, {
     canvas: {

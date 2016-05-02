@@ -1,10 +1,23 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 
 var AppActions = {
-    addNewItem: function (text) {
-        AppDispatcher.dispatch({
-            actionType: 'ADD_NEW_ITEM',
-            text: text
+
+    toDataURL: function(options) {
+        AppActions.dispatcher({
+            actionType: 'TO_DATA_URL',
+            options: options
+        });
+    },
+    resize: function(options) {
+        AppActions.dispatcher({
+            actionType: 'RESIZE',
+            options: options
+        });
+    },
+    resize: function(options) {
+        AppActions.dispatcher({
+            actionType: 'RESIZE',
+            options: options
         });
     }
 };

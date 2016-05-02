@@ -16,11 +16,11 @@ var DataURITool = React.createClass({
         return <div className={show} id={this.state.id}>
             <div className="option-section">
                 <strong>本地图片</strong>
-                <input type="file" onChange={this.handleChange.bind(this,'dataURI:file')} ></input>
+                <input type="file" onChange={this.handleChange.bind(this,'dataURI:target')} ></input>
             </div>
             <div className="option-section">
                 <strong>外链图片</strong>
-                <input type="url" placeholder="粘贴网络图片链" onChange={this.handleChange.bind(this,'dataURI:link')}></input>
+                <input type="url" placeholder="粘贴网络图片链" onChange={this.handleChange.bind(this,'dataURI:target')}></input>
             </div>
         </div>
     }
@@ -109,7 +109,7 @@ var TransforTool = React.createClass({
                     <option value="vnd.ms-photo" label="v"></option>
                 </datalist>
                 <strong>质量等级（jpg、web）</strong>
-                <input placeholder="0~1"></input>
+                <input placeholder="0~1" onChange={this.handleChange.bind(this,'transfor:encoderOptions')}></input>
         </div>
     }
 });
