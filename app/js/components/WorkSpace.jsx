@@ -41,7 +41,7 @@ var WorkSpace = React.createClass({
                 AppActions.clip(event.target.value);
                 break;
             case 'rotate':
-                AppActions.rotate(event.target.value);
+                AppActions.rotate(obj);
                 break;
             case 'transfor':
                 AppActions.transfor(event.target.value);

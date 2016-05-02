@@ -1,11 +1,14 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
+var SubImage = require('../utils/SubImage');
 var image = require('../utils/image');
 
 var AppStore = assign({},EventEmitter.prototype, {
     data: {
-        'subImage': null,
+        'current': '',
+        'lastImageData': '',
+        'currentImageData': '',
         'canvas': null
     },
     getCanvas: function () {
@@ -16,13 +19,11 @@ var AppStore = assign({},EventEmitter.prototype, {
         var _this = this;
         var promise = new Promise(function (resolve, reject) {
              image.getBase64(target,function (imageData) {
-                // _this.canvas.target = imageData;
-                // _this.canvas.width = this.image.width;
-                // _this.canvas.height = this.image.height;
-                // debugger;
-                 _this.data.subImage = this;
-                _this.data.canvas = this.canvas;
-                resolve();
+                 _this.data.lastImageData = imageData;
+                 _this.data.currentImageData = imageData;
+                 _this.data.canvas = this.canvas;
+                 _this.data.current = 'toDataURL';
+                 resolve();
             });
         });
         return promise;
@@ -30,11 +31,25 @@ var AppStore = assign({},EventEmitter.prototype, {
 
     resize: function (options) {
         var _this = this;
-        var target = this.canvas.target;
-        image.resize(target,options,function (imageData) {
-            _this.canvas.target = imageData;
-            _this.canvas.width = this.image.width;
-            _this.canvas.height = this.image.height;
+        if( _this.data.current != 'resize' ) {
+            _this.data.lastImageData = _this.data.currentImageData;
+        }
+        image.resize(_this.data.lastImageData,options,function (imageData) {
+            _this.data.currentImageData = imageData;
+            _this.data.canvas = this.canvas;
+            _this.data.current = 'resize';
+        });
+    },
+
+    rotate: function (options) {
+        var _this = this;
+        if( _this.data.current != 'rotate' ) {
+            _this.data.lastImageData = _this.data.currentImageData;
+        }
+        image.rotate(_this.data.lastImageData,options,function (imageData) {
+            _this.data.currentImageData = imageData;
+            _this.data.canvas = this.canvas;
+            _this.data.current = 'rotate';
         });
     },
 
