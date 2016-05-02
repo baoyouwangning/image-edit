@@ -22,40 +22,40 @@ var WorkSpace = React.createClass({
         });
     },
     handleChange: function (key,event) {
-        var arg = key.split(':')[0];
+        key = key.toString().split(':');
+        var arg = key[0];
+        var arg_key = key[1];
         var obj = {};
-        switch (key) {
-            case key.indexOf('dataURI') === 0 :
-                obj[arg] = event.target.value;
-                if( event.target.files.length > 0 ) {
-                    obj[arg] = event.target.files[0];
+        switch (arg) {
+            case 'dataURI':
+                obj[arg_key] = event.target.value;
+                if( event.target.files ) {
+                    obj[arg_key] = event.target.files[0];
                 }
                 AppActions.toDataURL(obj);
                 break;
-            case key.indexOf('resize') === 0:
+            case 'resize':
                 AppActions.resize(event.target.value);
                 break;
-            case key.indexOf('clip') === 0:
+            case 'clip':
                 AppActions.clip(event.target.value);
                 break;
-            case key.indexOf('rotate') === 0:
+            case 'rotate':
                 AppActions.rotate(event.target.value);
                 break;
-            case key.indexOf('transfor') === 0:
+            case 'transfor':
                 AppActions.transfor(event.target.value);
                 break;
-            case key.indexOf('watermark') === 0:
+            case 'watermark':
                 AppActions.watermark(event.target.value);
                 break;
             default:
         }
-        console.log(key);
-        console.log(event.target.value);
     },
     render: function () {
         return <div className="workspace">
             <Sidebar onChange={this.handleChange}></Sidebar>
-            <CanvasContainer></CanvasContainer>
+            <CanvasContainer content={this.state.canvas}></CanvasContainer>
         </div>
     }
 });

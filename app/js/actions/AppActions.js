@@ -3,37 +3,37 @@ var AppConstants = require('../constants/AppConstants');
 
 var AppActions = {
     toDataURL: function(options) {
-        AppActions.dispatcher({
+        AppDispatcher.dispatch({
             actionType: AppConstants.TO_DATA_URL,
             options: options
         });
     },
     resize: function(options) {
-        AppActions.dispatcher({
+        AppDispatcher.dispatch({
             actionType: AppConstants.RESIZE,
             options: options
         });
     },
     clip: function(options) {
-        AppActions.dispatcher({
+        AppDispatcher.dispatch({
             actionType: AppConstants.CLIP,
             options: options
         });
     },
     rotate: function(options) {
-        AppActions.dispatcher({
+        AppDispatcher.dispatch({
             actionType: AppConstants.ROTATE,
             options: options
         });
     },
     transfor: function(options) {
-        AppActions.dispatcher({
+        AppDispatcher.dispatch({
             actionType: AppConstants.TRANSFOR,
             options: options
         });
     },
     watermark: function(options) {
-        AppActions.dispatcher({
+        AppDispatcher.dispatch({
             actionType: AppConstants.WATERMARK,
             options: options
         });
