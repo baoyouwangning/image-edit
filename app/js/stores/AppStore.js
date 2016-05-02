@@ -4,38 +4,41 @@ var assign = require('object-assign');
 var image = require('../utils/image');
 
 var AppStore = assign({},EventEmitter.prototype, {
-    canvas: {
-        image: null,
-        width: "0px",
-        height: "0px"
+    data: {
+        'subImage': null,
+        'canvas': null
     },
     getCanvas: function () {
-        return this.canvas;
+        return this.data.canvas;
     },
 
     toDataURL: function (target) {
         var _this = this;
         var promise = new Promise(function (resolve, reject) {
-            image.getBase64(target,function (imageData) {
-                _this.canvas.image = imageData;
-                _this.canvas.width = this.image.width;
-                _this.canvas.height = this.image.height;
+             image.getBase64(target,function (imageData) {
+                // _this.canvas.target = imageData;
+                // _this.canvas.width = this.image.width;
+                // _this.canvas.height = this.image.height;
+                // debugger;
+                 _this.data.subImage = this;
+                _this.data.canvas = this.canvas;
                 resolve();
             });
         });
         return promise;
     },
 
-    addNewItemHandler: function (text) {
-        this.canvas.imageData = text;
+    resize: function (options) {
+        var _this = this;
+        var target = this.canvas.target;
+        image.resize(target,options,function (imageData) {
+            _this.canvas.target = imageData;
+            _this.canvas.width = this.image.width;
+            _this.canvas.height = this.image.height;
+        });
     },
 
     emitChange: function () {
-        var image = new Image();
-        image.width = this.canvas.width;
-        image.height = this.canvas.height;
-        image.src = this.canvas.image;
-        this.canvas.image = image;
         this.emit('change');
     },
     addChangeListener: function (callback) {

@@ -26,16 +26,16 @@ var WorkSpace = React.createClass({
         var arg = key[0];
         var arg_key = key[1];
         var obj = {};
+        obj[arg_key] = event.target.value;
         switch (arg) {
             case 'dataURI':
-                obj[arg_key] = event.target.value;
                 if( event.target.files ) {
                     obj[arg_key] = event.target.files[0];
                 }
                 AppActions.toDataURL(obj);
                 break;
             case 'resize':
-                AppActions.resize(event.target.value);
+                AppActions.resize(obj);
                 break;
             case 'clip':
                 AppActions.clip(event.target.value);
