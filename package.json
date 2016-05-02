@@ -46,6 +46,7 @@
     "flux": "^2.1.1",
     "html-webpack-plugin": "^2.15.0",
     "jest-cli": "^0.10.0",
+    "keymirror": "^0.1.1",
     "less": "^2.6.1",
     "less-loader": "^2.2.3",
     "object-assign": "^4.0.1",

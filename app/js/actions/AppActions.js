@@ -1,22 +1,40 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
+var AppConstants = require('../constants/AppConstants');
 
 var AppActions = {
-
     toDataURL: function(options) {
         AppActions.dispatcher({
-            actionType: 'TO_DATA_URL',
+            actionType: AppConstants.TO_DATA_URL,
             options: options
         });
     },
     resize: function(options) {
         AppActions.dispatcher({
-            actionType: 'RESIZE',
+            actionType: AppConstants.RESIZE,
             options: options
         });
     },
-    resize: function(options) {
+    clip: function(options) {
         AppActions.dispatcher({
-            actionType: 'RESIZE',
+            actionType: AppConstants.CLIP,
+            options: options
+        });
+    },
+    rotate: function(options) {
+        AppActions.dispatcher({
+            actionType: AppConstants.ROTATE,
+            options: options
+        });
+    },
+    transfor: function(options) {
+        AppActions.dispatcher({
+            actionType: AppConstants.TRANSFOR,
+            options: options
+        });
+    },
+    watermark: function(options) {
+        AppActions.dispatcher({
+            actionType: AppConstants.WATERMARK,
             options: options
         });
     }
