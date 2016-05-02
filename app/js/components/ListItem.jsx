@@ -1,9 +1,9 @@
 var React = require('react');
+var BindingMixin = require('../utils/BindingMixin');
 require('../../styles/list-item.less');
 
-
-
 var DataURITool = React.createClass({
+    mixins: [BindingMixin],
     getInitialState: function() {
         return this.props.content;
     },
@@ -16,17 +16,18 @@ var DataURITool = React.createClass({
         return <div className={show} id={this.state.id}>
             <div className="option-section">
                 <strong>本地图片</strong>
-                <input type="file" defaultValue="浏览本地图片"></input>
+                <input type="file" onChange={this.handleChange.bind(this,'dataURI:file')} ></input>
             </div>
             <div className="option-section">
                 <strong>外链图片</strong>
-                <input type="url" placeholder="粘贴网络图片链"></input>
+                <input type="url" placeholder="粘贴网络图片链" onChange={this.handleChange.bind(this,'dataURI:link')}></input>
             </div>
         </div>
     }
 });
 
 var ResizeTool = React.createClass({
+    mixins: [BindingMixin],
     getInitialState: function() {
         return this.props.content;
     },
@@ -38,14 +39,15 @@ var ResizeTool = React.createClass({
         var show = this.state.show ? "options" : "options hide"
         return <div className={show} id={this.state.id}>
             <strong>最大宽度：</strong>
-            <input type="number" placeholder="maxWidth"></input>
+            <input type="number" placeholder="maxWidth" onChange={this.handleChange.bind(this,'resize:maxWidth')}></input>
             <strong>最大高度：</strong>
-            <input type="number" placeholder="maxHeight"></input>
+            <input type="number" placeholder="maxHeight" onChange={this.handleChange.bind(this,'resize:maxHeight')}></input>
         </div>
     }
 });
 
 var ClipTool = React.createClass({
+    mixins: [BindingMixin],
     getInitialState: function() {
         return this.props.content;
     },
@@ -57,18 +59,19 @@ var ClipTool = React.createClass({
         var show = this.state.show ? "options" : "options hide"
         return <div className={show} id={this.state.id}>
             <strong>left值：</strong>
-            <input type="number" placeholder="left"></input>
+            <input type="number" placeholder="left" onChange={this.handleChange.bind(this,'clip:left')}></input>
             <strong>top值：</strong>
-            <input type="number" placeholder="top"></input>
+            <input type="number" placeholder="top" onChange={this.handleChange.bind(this,'clip:top')}></input>
             <strong>right值：</strong>
-            <input type="number" placeholder="right"></input>
+            <input type="number" placeholder="right" onChange={this.handleChange.bind(this,'clip:right')}></input>
             <strong>bottom值：</strong>
-            <input type="number" placeholder="bottom"></input>
+            <input type="number" placeholder="bottom" onChange={this.handleChange.bind(this,'clip:bottom')}></input>
         </div>
     }
 });
 
 var RotateTool = React.createClass({
+    mixins: [BindingMixin],
     getInitialState: function() {
         return this.props.content;
     },
@@ -80,12 +83,13 @@ var RotateTool = React.createClass({
         var show = this.state.show ? "options" : "options hide"
         return <div className={show} id={this.state.id}>
             <strong>旋转角度</strong>
-            <input type="number" placeholder="输入旋转角度"></input>
+            <input type="number" placeholder="输入旋转角度" onChange={this.handleChange.bind(this,'rotate:deg')}></input>
         </div>
     }
 });
 
 var TransforTool = React.createClass({
+    mixins: [BindingMixin],
     getInitialState: function() {
         return this.props.content;
     },
@@ -97,7 +101,7 @@ var TransforTool = React.createClass({
         var show = this.state.show ? "options" : "options hide"
         return <div className={show} id={this.state.id}>
             <strong>输出格式</strong>
-            <input type="text" placeholder="png,jpeg,webp,vnd.ms-photo" list="image_formate"></input>
+            <input type="text" placeholder="png,jpeg,webp,vnd.ms-photo" list="image_formate" onChange={this.handleChange.bind(this,'transfor:formate')}></input>
                 <datalist id="image_formate">
                     <option value="png" label="p"></option>
                     <option value="jpeg" label="j"></option>
@@ -111,6 +115,7 @@ var TransforTool = React.createClass({
 });
 
 var WatermarkTool = React.createClass({
+    mixins: [BindingMixin],
     getInitialState: function() {
         return this.props.content;
     },
@@ -122,21 +127,22 @@ var WatermarkTool = React.createClass({
         var show = this.state.show ? "options" : "options hide"
         return <div className={show} id={this.state.id}>
             <strong>水印：</strong>
-            <input type="url" placeholder="url、imageData、text"></input>
+            <input type="url" placeholder="url、imageData、text" onChange={this.handleChange.bind(this,'watermark:url')}></input>
             <strong>left值：</strong>
-            <input type="number" placeholder="left"></input>
+            <input type="number" placeholder="left" onChange={this.handleChange.bind(this,'watermark:left')}></input>
             <strong>top值：</strong>
-            <input type="number" placeholder="top"></input>
+            <input type="number" placeholder="top" onChange={this.handleChange.bind(this,'watermark:top')}></input>
             <strong>right值：</strong>
-            <input type="number" placeholder="right"></input>
+            <input type="number" placeholder="right" onChange={this.handleChange.bind(this,'watermark:right')}></input>
             <strong>bottom值：</strong>
-            <input type="number" placeholder="bottom"></input>
+            <input type="number" placeholder="bottom" onChange={this.handleChange.bind(this,'watermark:bottom')}></input>
         </div>
     }
 });
 
 
 var ListItem = React.createClass({
+    mixins: [BindingMixin],
     getInitialState: function() {
         return this.props.content;
     },
@@ -172,7 +178,7 @@ var ListItem = React.createClass({
                 <div className="items-img"></div>
                 {this.state.text}
             </h3>
-            <OptionTool content={this.state} render={this.props.render}></OptionTool>
+            <OptionTool content={this.state} render={this.props.render} onChange={this.handleChange}></OptionTool>
         </div>
     }
 });

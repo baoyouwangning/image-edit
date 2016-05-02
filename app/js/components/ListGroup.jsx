@@ -1,7 +1,9 @@
 var React = require('react');
+var BindingMixin = require('../utils/BindingMixin');
 var ListItem = require('./ListItem.jsx');
 
 var ListGroup = React.createClass({
+    mixins: [BindingMixin],
     getDefaultProps: function () {
         var toolbarInfo = {
             'toolbarList': [
@@ -53,7 +55,7 @@ var ListGroup = React.createClass({
             } else {
                 content[i].show = false;
             }
-            listGroup.push(<ListItem key={i} content={content[i]} onClick={this.handleClick} render={content[i].id === this.state.clickNumber || content[i].id  == this.state.lastClickNumber}></ListItem>); //key优化diff
+            listGroup.push(<ListItem key={i} content={content[i]} onClick={this.handleClick} onChange={this.handleChange} render={content[i].id === this.state.clickNumber || content[i].id  == this.state.lastClickNumber}></ListItem>); //key优化diff
         }
 
         return <ul>{listGroup}</ul>
