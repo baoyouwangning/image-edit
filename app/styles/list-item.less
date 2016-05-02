@@ -14,10 +14,6 @@
     vertical-align: middle;
   }
 
-  & + div {
-    margin: 0 0 10px 0;
-  }
-
   &:hover {
     border: 1px solid #bbb;
     background: #fff;
@@ -53,4 +49,35 @@
 
 .item-0 {
   //background: url("../images/tips5.png") left no-repeat;
+}
+
+.options {
+  margin: 10px auto;
+  background: -moz-linear-gradient(top,whitesmoke,#DDD);
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  padding: 10px;
+  box-shadow: 2px 2px 4px #666;
+  &.hide {
+    display: none;
+  }
+}
+
+.option-section {
+  margin: 10px auto;
+}
+
+//dataURI
+.import-image {
+  width: 215px;
+  height: 577px;
+  float: left;
+  padding: 10px;
+  h3 {
+    font-size: 14px;
+    line-height: 40px;
+  }
+  p {
+    color: #ccc;
+  }
 }
