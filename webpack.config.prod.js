@@ -15,7 +15,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         publicPath: '',
-        filename: './js/[name].[hash].js',
+        filename: '[name].[hash].js',
         chunkFilename: '[id].[chunkhash].js'
     },
     externals: undefined,
@@ -39,13 +39,13 @@ module.exports = {
                 loader: 'url',
                 query: {
                     limit: 25000,
-                    name: './images/[name].[ext]?[hash:7]'
+                    name: '[name].[ext]?[hash:7]'
                 }
             }, {
                 test: /\.eot|\.ttf|\.woff2?/,
                 loader: 'file',
                 query: {
-                    name: './fonts/[name].[ext]?[hash:7]'
+                    name: '[name].[ext]?[hash:7]'
                 }
             }
         ]
@@ -61,9 +61,9 @@ module.exports = {
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendors',
-            filename: './js/[name].js',
+            filename: '[name].js',
         }),
-        new ExtractTextPlugin('./styles/[name].[contenthash].css'),
+        new ExtractTextPlugin('[name].[contenthash].css'),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false
