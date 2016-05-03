@@ -38,16 +38,16 @@ var WorkSpace = React.createClass({
                 AppActions.resize(obj);
                 break;
             case 'clip':
-                AppActions.clip(event.target.value);
+                AppActions.clip(obj);
                 break;
             case 'rotate':
                 AppActions.rotate(obj);
                 break;
             case 'transfor':
-                AppActions.transfor(event.target.value);
+                AppActions.transfor(obj);
                 break;
             case 'watermark':
-                AppActions.watermark(event.target.value);
+                AppActions.watermark(obj);
                 break;
             default:
         }

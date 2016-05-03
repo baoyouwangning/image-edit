@@ -12,23 +12,18 @@ AppDispatcher.register(function (action) {
            break;
        case AppConstants.RESIZE:
            AppStore.resize(action.options);
-           AppStore.emitChange();
            break;
        case AppConstants.CLIP:
            AppStore.clip(action.options);
-           AppStore.emitChange();
            break;
        case AppConstants.ROTATE:
            AppStore.rotate(action.options);
-           AppStore.emitChange();
            break;
        case AppConstants.TRANSFOR:
            AppStore.transfor(action.options);
-           AppStore.emitChange();
            break;
        case AppConstants.WATERMARK:
-           AppStore.watermark(action.text);
-           AppStore.emitChange();
+           AppStore.watermark(action.options);
            break;
        default:
    }

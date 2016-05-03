@@ -101,7 +101,7 @@ var TransforTool = React.createClass({
         var show = this.state.show ? "options" : "options hide"
         return <div className={show} id={this.state.id}>
             <strong>输出格式</strong>
-            <input type="text" placeholder="png,jpeg,webp,vnd.ms-photo" list="image_formate" onChange={this.handleChange.bind(this,'transfor:formate')}></input>
+            <input type="text" placeholder="png,jpeg,webp,vnd.ms-photo" list="image_formate" onChange={this.handleChange.bind(this,'transfor:type')}></input>
                 <datalist id="image_formate">
                     <option value="png" label="p"></option>
                     <option value="jpeg" label="j"></option>
@@ -127,7 +127,7 @@ var WatermarkTool = React.createClass({
         var show = this.state.show ? "options" : "options hide"
         return <div className={show} id={this.state.id}>
             <strong>水印：</strong>
-            <input type="url" placeholder="url、imageData、text" onChange={this.handleChange.bind(this,'watermark:url')}></input>
+            <input type="url" placeholder="url、imageData、text" onChange={this.handleChange.bind(this,'watermark:mark')}></input>
             <strong>left值：</strong>
             <input type="number" placeholder="left" onChange={this.handleChange.bind(this,'watermark:left')}></input>
             <strong>top值：</strong>
