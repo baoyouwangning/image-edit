@@ -1,5 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Index from './components/Index';
+var ReactDOM = require('react-dom');
+var Index = require('./components/Index.jsx');
 
 ReactDOM.render(<Index></Index>, document.getElementById('wrap'));
