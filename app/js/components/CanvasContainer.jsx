@@ -22,6 +22,9 @@ var CanvasContainer = React.createClass({
         return <div className="canvas-container">
         </div>
     },
+    componentDidMount: function () {
+        ReactDOM.findDOMNode(this).style.width =  document.body.clientWidth - document.getElementById('sidebar').offsetWidth - 20 + "px";
+    },
     componentDidUpdate: function () {
         // var canvas = this.refs.canvas; //warning.js:45 Warning: ReactDOMComponent: Do not access .props of a DOM node;
         // var canvas = ReactDOM.findDOMNode(this).getElementsByTagName("canvas")[0];

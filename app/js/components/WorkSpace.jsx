@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
 var Sidebar = require('./Sidebar');
 var CanvasContainer = require('./CanvasContainer');
 var AppActions = require('../actions/AppActions');
@@ -58,6 +59,9 @@ var WorkSpace = React.createClass({
             <Sidebar onChange={this.handleChange}></Sidebar>
             <CanvasContainer content={this.state.canvas}></CanvasContainer>
         </div>
+    },
+    componentDidMount: function () {
+        ReactDOM.findDOMNode(this).style.height = document.body.clientHeight - document.getElementById('head-bar').offsetHeight + "px";
     }
 });
 

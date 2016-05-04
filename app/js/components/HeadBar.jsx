@@ -7,7 +7,7 @@ var HeadBar = React.createClass({
         return this.props.content;
     },
     render: function () {
-        return <div className="head-bar">
+        return <div className="head-bar" id="head-bar">
             <Logo content={this.state.logo}></Logo>
         </div>
     }

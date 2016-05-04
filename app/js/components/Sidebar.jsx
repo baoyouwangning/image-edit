@@ -6,7 +6,7 @@ require('../../styles/sidebar');
 var Sidebar = React.createClass({
     mixins: [BindingMixin],
     render: function () {
-        return <div className="sidebar">
+        return <div className="sidebar" id="sidebar">
             <ListGroup onChange={this.handleChange}></ListGroup>
         </div>
     }
