@@ -3,6 +3,7 @@ var Sidebar = require('./Sidebar');
 var CanvasContainer = require('./CanvasContainer');
 var AppActions = require('../actions/AppActions');
 var AppStore = require('../stores/AppStore');
+require('../../styles/workspace.less');
 
 var WorkSpace = React.createClass({
     getInitialState: function () {

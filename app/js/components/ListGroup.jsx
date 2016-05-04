@@ -58,7 +58,7 @@ var ListGroup = React.createClass({
             listGroup.push(<ListItem key={i} content={content[i]} onClick={this.handleClick} onChange={this.handleChange} render={content[i].id === this.state.clickNumber || content[i].id  == this.state.lastClickNumber}></ListItem>); //key优化diff
         }
 
-        return <ul>{listGroup}</ul>
+        return <div>{listGroup}</div>
     }
 });
 
