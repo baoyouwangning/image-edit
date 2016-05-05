@@ -25,7 +25,13 @@ var AppStore = assign({},EventEmitter.prototype, {
             'rotate':{},
             'transfor':{},
             'watermark':{
-                'position' : {},
+                'position' : {
+                    'top': undefined,
+                    'top' : undefined,
+                    'left' : undefined,
+                    'right' : undefined,
+                    'bottom' : undefined
+                },
                 'mark' : null
             }
         }
@@ -120,11 +126,11 @@ var AppStore = assign({},EventEmitter.prototype, {
             _this.data.lastImageData = _this.data.currentImageData;
             _this.data.current = 'watermark';
         }
-        options = _extend(_this.data.option['watermark'],options);
         var position = _extend(_this.data.option['watermark']['position'],options);
-        options.position = position;
-        options.mark = ""
-        image.watermark(_this.data.lastImageData,options,function (imageData) {
+        var _options = {};
+        _options.position = position;
+        _options.mark = position.mark || options;
+        image.watermark(_this.data.lastImageData,_options,function (imageData) {
             _this.data.currentImageData = imageData;
             _this.data.canvas = this.canvas;
             _this.emitChange();

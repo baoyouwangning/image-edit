@@ -292,9 +292,9 @@ SubImage.prototype.watermark = function (config,callback) {
         _this.mark = this;		//给背景SubImage添加mark（mark也是SubImage实例）
         var img = _this.obj;	//背景Image对象
         var mark = this.obj;	//水印Image对象
-        var canvas = this.canvas;
+        var canvas = _this.canvas;
         var context = canvas.getContext("2d");
-        if( this.drew ) {
+        if( _this.drew ) {
             img = SubImage.getDeepCopyOfCanvas(canvas);
         }
         var w = img.width;
@@ -306,7 +306,7 @@ SubImage.prototype.watermark = function (config,callback) {
         this.image.width = canvas.width = w;
         this.image.height = canvas.height = h;
         context.drawImage(img,0,0);
-        this.drew = true;
+        _this.drew = true;
 
         var startX = 0;   //mark的x,y坐标
         var startY = 0;
