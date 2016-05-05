@@ -30,7 +30,7 @@ var CanvasContainer = React.createClass({
         // var canvas = ReactDOM.findDOMNode(this).getElementsByTagName("canvas")[0];
         // var context = canvas.getContext("2d");
         // context.drawImage(this.state.canvas, 0, 0, this.state.width, this.state.height);
-
+        
         var container = ReactDOM.findDOMNode(this);
         container.innerHTML = '';
         container.appendChild(this.state.canvas);

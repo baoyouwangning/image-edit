@@ -13,6 +13,7 @@ var WorkSpace = React.createClass({
         }
     },
     componentDidMount: function () {
+        ReactDOM.findDOMNode(this).style.height = document.body.clientHeight - document.getElementById('head-bar').offsetHeight + "px";
         AppStore.addChangeListener(this._onChange);
     },
     componentWillUnmount: function () {
@@ -59,9 +60,6 @@ var WorkSpace = React.createClass({
             <Sidebar onChange={this.handleChange}></Sidebar>
             <CanvasContainer content={this.state.canvas}></CanvasContainer>
         </div>
-    },
-    componentDidMount: function () {
-        ReactDOM.findDOMNode(this).style.height = document.body.clientHeight - document.getElementById('head-bar').offsetHeight + "px";
     }
 });
 
