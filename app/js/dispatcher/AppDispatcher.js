@@ -25,6 +25,8 @@ AppDispatcher.register(function (action) {
        case AppConstants.WATERMARK:
            AppStore.watermark(action.options);
            break;
+       case AppConstants.CUEGRAPH:
+           AppStore.cueGraph(action.options)
        default:
    }
 });

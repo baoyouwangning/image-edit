@@ -33,6 +33,18 @@ var AppStore = assign({},EventEmitter.prototype, {
                     'bottom' : undefined
                 },
                 'mark' : null
+            },
+            'cueGraph': {
+                edge:{
+                    R: [10,30],
+                    G: [13,30],
+                    B: [25,50]
+                },
+                line: {
+                    R: [53,73],
+                    G: [52,58],
+                    B: [61,70]
+                }
             }
         }
     },
@@ -88,7 +100,7 @@ var AppStore = assign({},EventEmitter.prototype, {
             _this.data.lastImageData = _this.data.currentImageData;
             _this.data.current = 'rotate';
         }
-        options = _extend(_this.data.option['rotate'],options);
+        options = _extend(_this.data.option['rotate'],options.alipay);
         image.rotate(_this.data.lastImageData,options,function (imageData) {
             _this.data.currentImageData = imageData;
             _this.data.canvas = this.canvas;
@@ -131,6 +143,21 @@ var AppStore = assign({},EventEmitter.prototype, {
         _options.position = position;
         _options.mark = position.mark || options;
         image.watermark(_this.data.lastImageData,_options,function (imageData) {
+            _this.data.currentImageData = imageData;
+            _this.data.canvas = this.canvas;
+            _this.emitChange();
+        });
+    },
+
+    cueGraph: function (options) {
+        console.log(options);
+        var _this = this;
+        if( _this.data.current != 'cueGraph' ) {
+            _this.data.lastImageData = _this.data.currentImageData;
+            _this.data.current = 'cueGraph';
+        }
+        options = _extend(_this.data.option['cueGraph'],options);
+        image.cueGraph(_this.data.lastImageData,options,function (imageData) {
             _this.data.currentImageData = imageData;
             _this.data.canvas = this.canvas;
             _this.emitChange();

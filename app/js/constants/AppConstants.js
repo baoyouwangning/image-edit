@@ -6,5 +6,6 @@ module.exports = keyMirror({
     CLIP: 'clip',
     ROTATE: 'rotate',
     TRANSFOR: 'transfor',
-    WATERMARK: 'watermark'
+    WATERMARK: 'watermark',
+    CUEGRAPH: 'cue_graph'
 });

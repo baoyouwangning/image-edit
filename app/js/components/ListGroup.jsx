@@ -25,6 +25,9 @@ var ListGroup = React.createClass({
                 }, {
                     id:5,
                     text: '加水印'
+                }, {
+                    id:6,
+                    text: '线索图'
                 }
             ],
             'clickNumber':  -1,    //标记点击的tool
@@ -42,6 +45,27 @@ var ListGroup = React.createClass({
             this.setState({
                 clickNumber: key,
                 lastClickNumber: this.state.clickNumber
+            });
+        }
+
+        if ( key === 6 ) {
+            //写死，触发alipay
+            var handleChange = this.handleChange.bind(this,'cueGraph:alipay');
+            handleChange({
+                target:{
+                    value: {
+                        edge:{
+                            R: [10,30],
+                            G: [13,30],
+                            B: [25,50]
+                        },
+                        line: {
+                            R: [53,73],
+                            G: [52,58],
+                            B: [61,70]
+                        }
+                    }
+                }
             });
         }
     },

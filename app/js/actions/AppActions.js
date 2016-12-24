@@ -37,6 +37,12 @@ var AppActions = {
             actionType: AppConstants.WATERMARK,
             options: options
         });
+    },
+    cueGraph: function (options) {
+        AppDispatcher.dispatch({
+            actionType: AppConstants.CUEGRAPH,
+            options: options
+        });
     }
 };
 

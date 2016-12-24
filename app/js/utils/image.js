@@ -59,6 +59,16 @@ var image = {
             }
             return this.watermark(config,callback);
         });
+    },
+
+    //线索图
+    cueGraph: function (target,config,callback) {
+        return new SubImage(target,function (status) {
+            if( status == 0 ) {
+                return callback.call(this,null);
+            }
+            return this.cueGraph(config,callback);
+        });
     }
 };
 

@@ -52,6 +52,8 @@ var WorkSpace = React.createClass({
             case 'watermark':
                 AppActions.watermark(obj);
                 break;
+            case 'cueGraph':
+                AppActions.cueGraph(obj);
             default:
         }
     },

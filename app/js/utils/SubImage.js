@@ -29,8 +29,9 @@ inheritPrototype(SubImage,AsynObject);
 //图片包装器初始化
 SubImage.prototype.initialize = function (target,callback) {
     var __this = this;		//SubImage
-
-    if( target instanceof Blob && target.type.substring(0,6) === "image/" ) {	//本地图片文件
+    if ( target instanceof ImageData) {
+        alert("暂不支持ImageData");
+    } else if( target instanceof Blob && target.type.substring(0,6) === "image/" ) {	//本地图片文件
         new SubFileReader(target,function (status) {
             if( status == 0 ) {			 //读取失败
                 return callback.call(__this,0);
@@ -40,9 +41,9 @@ SubImage.prototype.initialize = function (target,callback) {
     } else if( target.substring(0,11) === "data:image/" ) {	//图片数据URI
         this.obj.src = target;
         //找到图片格式
-        var formats = ["png","jpeg","webp","vnd.ms-photo"];
-        for( var i = 0; i < formats.length; i++ ) {
-            if( target.substring(5,11+formats[i].length) === "image/" + formats[i] ) {
+        var formats = ["png", "jpeg", "webp", "vnd.ms-photo"];
+        for (var i = 0; i < formats.length; i++) {
+            if (target.substring(5, 11 + formats[i].length) === "image/" + formats[i]) {
                 __this.originFormat = "image/" + formats[i];
                 break;
             }
@@ -106,7 +107,9 @@ SubImage.prototype.toDataURL = function (callback) {
     var h = img.height;
     this.image.width = canvas.width = w;
     this.image.height = canvas.height = h;
+
     context.drawImage(img,0,0);
+
     this.drew = true;
     var _imgData = canvas.toDataURL(this.getFormat());
     callback.call(this,_imgData);
@@ -352,5 +355,400 @@ SubImage.prototype.watermark = function (config,callback) {
     //创建mark实例(SubImage类型）
     new SubImage(_config.mark,doMark);
 };
+
+SubImage.prototype.cueGraph = function (config,callback) {
+    //this.rotate({deg:90},callback);
+    debugger;
+    var img = this.obj;
+    var canvas = this.canvas;
+    var context = canvas.getContext("2d");
+    if( this.drew ) {
+        img = SubImage.getDeepCopyOfCanvas(canvas);
+    }
+
+    //先绘图
+    canvas.width = img.width;
+    canvas.height = img.height;
+    context.drawImage(img,0,0,img.width,img.height);
+
+    var xLen = img.width;
+    var yLen = img.height;
+    var imageData = context.getImageData(0,0,xLen,yLen);
+    var data = imageData.data;	//图像原数据
+    var len = data.length;
+    var red;
+    var green;
+    var blue;
+    var alpha; //存储rgba的a的值
+    var cutTop = 0; //修剪的头高
+    var cutBottom = 0; //修剪的低高
+    var cutLeft = 0; //修剪的左宽
+    var cutRight = 0; //修剪的右宽
+    var edge = config.edge;
+
+    //扫描上边
+    for( var i = 0; i < len / (xLen * 4); i++) {
+        var flag = 0; //该行是否有非透明点， 默认：无非透明点
+        for( var j = i * (xLen * 4); j < (i+1) * (xLen * 4); j += 4 ) {    //遍历当前边每个点
+            red = data[j];
+            green = data[j+1];
+            blue = data[j+2];
+            alpha = data[j+3];
+            if( red >= edge.R[0] && red <= edge.R[1] 
+                && green >= edge.G[0] && green <= edge.G[1] 
+                && blue >= edge.B[0] && blue <= edge.B[1] ) {
+                flag++;   //
+                //break;
+            }
+        }
+        if( flag > 200 && cutTop > (yLen / 4) ) {
+            break;       //该边扫描完毕
+        } else {
+            cutTop++;    //高度无效边计数
+        }
+    }
+
+    //扫描下边
+    for( var i = len / (xLen * 4) - 1; i >= 0; i--) {
+        var flag = 0; //该行是否有非透明点， 默认：无非透明点
+        for( var j = i * (xLen * 4); j < (i+1) * (xLen * 4); j += 4 ) {  //遍历当前边每个点
+            red = data[j];
+            green = data[j+1];
+            blue = data[j+2];
+            alpha = data[j+3];
+            if( red >= edge.R[0] && red <= edge.R[1]
+                && green >= edge.G[0] && green <= edge.G[1]
+                && blue >= edge.B[0] && blue <= edge.B[1] ) {
+                flag++;   //找到非透明点
+                // break;
+            }
+        }
+        if( flag > 200 ) {
+            break;       //该边扫描完毕
+        } else {
+            cutBottom++;    //高度无效边计数
+        }
+    }
+
+    //扫描左边
+    for( var i = 0;  i < len / (yLen * 4); i++) {
+        var flag = 0; 	//该行是否有非透明点， 默认：无非透明点
+        for( var j = i * 4; j <= len - ((xLen - i) * 4); j += (xLen * 4) ) {  //遍历当前边每个点
+            red = data[j];
+            green = data[j+1];
+            blue = data[j+2];
+            alpha = data[j+3];
+            if( red >= edge.R[0] && red <= edge.R[1]
+                && green >= edge.G[0] && green <= edge.G[1]
+                && blue >= edge.B[0] && blue <= edge.B[1] ) {
+                flag++;   //找到非透明点
+                // break;
+            }
+        }
+        if( flag > 200 ) {
+            break;       //该边扫描完毕
+        } else {
+            cutLeft++;    //高度无效边计数
+        }
+    }
+
+    //扫描右边
+    for( var i = len / (yLen * 4) - 1;  i >= 0 ; i--) {
+        var flag = 0; 	//该行是否有非透明点， 默认：无非透明点
+        for( var j = i * 4; j <= len - ((xLen - i) * 4); j += (xLen * 4) ) {  //遍历当前边每个点
+            red = data[j];
+            green = data[j+1];
+            blue = data[j+2];
+            alpha = data[j+3];
+            if( red >= edge.R[0] && red <= edge.R[1]
+                && green >= edge.G[0] && green <= edge.G[1]
+                && blue >= edge.B[0] && blue <= edge.B[1] ) {
+                flag++;   //找到非透明点
+                // break;
+            }
+        }
+        if( flag > 200 ) {
+            break;       //该边扫描完毕
+        } else {
+            cutRight++;    //高度无效边计数
+        }
+    }
+
+    //确定剪切区域的宽度
+    var _w = img.width - cutLeft - cutRight;
+    var _h = img.height - cutTop - cutBottom;
+    this.image.width = canvas.width = _w;
+    this.image.height = canvas.height = _h;
+
+    context.drawImage(img,cutLeft,cutTop,_w,_h,0,0,_w,_h);
+
+    this.drew = true;
+    var _imgData = canvas.toDataURL(this.getFormat());
+    callback.call(this,_imgData);
+
+    //去除边界
+    //创建mark实例(SubImage类型）
+    new SubImage(_imgData,function () {
+        var img = this.obj;
+        var canvas = this.canvas;
+        var context = canvas.getContext("2d");
+        if( this.drew ) {
+            img = SubImage.getDeepCopyOfCanvas(canvas);
+        }
+
+        //先绘图
+        canvas.width = img.width;
+        canvas.height = img.height;
+        context.drawImage(img,0,0,img.width,img.height);
+
+        //去除边界边
+        var xLen = img.width;
+        var yLen = img.height;
+        var imageData = context.getImageData(0,0,xLen,yLen);
+        var data = imageData.data;  //图像原数据
+        var len = data.length;
+        var red;
+        var green;
+        var blue;
+        var alpha; //存储rgba的a的值
+        var cutTop = 0; //修剪的头高
+        var cutBottom = 0;  //修剪的低高
+        var cutLeft = 0; //修剪的左宽
+        var cutRight = 0; //修剪的右宽
+        var edge = config.edge;
+
+        //扫描上边
+        for( var i = 0; i < len / (xLen * 4); i++) {
+            var flag = 0; //该行是否有非透明点， 默认：无非透明点
+            for( var j = i * (xLen * 4); j < (i+1) * (xLen * 4); j += 4 ) {    //遍历当前边每个点
+                red = data[j];
+                green = data[j+1];
+                blue = data[j+2];
+                alpha = data[j+3];
+                if( red >= edge.R[0] && red <= edge.R[1]
+                    && green >= edge.G[0] && green <= edge.G[1]
+                    && blue >= edge.B[0] && blue <= edge.B[1] ) {
+                    flag++;   //
+                    //break;
+                }
+            }
+            if( flag > 100 ) {
+                cutTop++;    //高度无效边计数
+            } else {
+                break;       //该边扫描完毕
+            }
+        }
+
+        //扫描下边
+        for( var i = len / (xLen * 4) - 1; i >= 0; i--) {
+            var flag = 0; //该行是否有非透明点， 默认：无非透明点
+            for( var j = i * (xLen * 4); j < (i+1) * (xLen * 4); j += 4 ) {  //遍历当前边每个点
+                red = data[j];
+                green = data[j+1];
+                blue = data[j+2];
+                alpha = data[j+3];
+                if( red >= edge.R[0] && red <= edge.R[1]
+                    && green >= edge.G[0] && green <= edge.G[1]
+                    && blue >= edge.B[0] && blue <= edge.B[1] ) {
+                    flag++;   //找到非透明点
+                    // break;
+                }
+            }
+            if( flag > 100 ) {
+                cutBottom++;    //高度无效边计数
+            } else {
+                break;       //该边扫描完毕
+            }
+        }
+
+        //扫描左边
+        for( var i = 0;  i < len / (yLen * 4); i++) {
+            var flag = 0;   //该行是否有非透明点， 默认：无非透明点
+            for( var j = i * 4; j <= len - ((xLen - i) * 4); j += (xLen * 4) ) {  //遍历当前边每个点
+                red = data[j];
+                green = data[j+1];
+                blue = data[j+2];
+                alpha = data[j+3];
+                if( red >= edge.R[0] && red <= edge.R[1]
+                    && green >= edge.G[0] && green <= edge.G[1]
+                    && blue >= edge.B[0] && blue <= edge.B[1] ) {
+                    flag++;   //找到非透明点
+                    // break;
+                }
+            }
+            if( flag > 200 ) {
+                cutLeft++;    //高度无效边计数
+            } else {
+                break;       //该边扫描完毕
+            }
+        }
+
+        //扫描右边
+        for( var i = len / (yLen * 4) - 1;  i >= 0 ; i--) {
+            var flag = 0;   //该行是否有非透明点， 默认：无非透明点
+            for( var j = i * 4; j <= len - ((xLen - i) * 4); j += (xLen * 4) ) {  //遍历当前边每个点
+                red = data[j];
+                green = data[j+1];
+                blue = data[j+2];
+                alpha = data[j+3];
+                if( red >= edge.R[0] && red <= edge.R[1]
+                    && green >= edge.G[0] && green <= edge.G[1]
+                    && blue >= edge.B[0] && blue <= edge.B[1] ) {
+                    flag++;   //找到非透明点
+                    // break;
+                }
+            }
+            if( flag > 200 ) {
+                cutRight++;    //高度无效边计数
+            } else {
+                break;       //该边扫描完毕
+            }
+        }
+
+        //确定剪切区域的宽度
+        var _w = img.width - cutLeft - cutRight;
+        var _h = img.height - cutTop - cutBottom;
+        this.image.width = canvas.width = _w;
+        this.image.height = canvas.height = _h;
+
+        context.drawImage(img,cutLeft,cutTop,_w,_h,0,0,_w,_h);
+
+        this.drew = true;
+        var _imgData = canvas.toDataURL(this.getFormat());
+        callback.call(this,_imgData);
+
+        //去除条边
+        //创建实例(SubImage类型）
+        new SubImage(_imgData,function () {
+            var img = this.obj;
+            var canvas = this.canvas;
+            var context = canvas.getContext("2d");
+            if( this.drew ) {
+                img = SubImage.getDeepCopyOfCanvas(canvas);
+            }
+
+            //先绘图
+            canvas.width = img.width;
+            canvas.height = img.height;
+            context.drawImage(img,0,0,img.width,img.height);
+
+            //去除边界边
+            var xLen = img.width;
+            var yLen = img.height;
+            var imageData = context.getImageData(0,0,xLen,yLen);
+            var data = imageData.data;  //图像原数据
+            var len = data.length;
+            var red;
+            var green;
+            var blue;
+            var alpha; //存储rgba的a的值
+            var cutTop = 0; //修剪的头高
+            var cutBottom = 0;  //修剪的低高
+            var cutLeft = 0; //修剪的左宽
+            var cutRight = 0; //修剪的右宽
+            var edge = config.edge;
+
+            //扫描上边
+            for( var i = 0; i < len / (xLen * 4); i++) {
+                var flag = 0; //该行是否有非透明点， 默认：无非透明点
+                for( var j = i * (xLen * 4); j < (i+1) * (xLen * 4); j += 4 ) {    //遍历当前边每个点
+                    red = data[j];
+                    green = data[j+1];
+                    blue = data[j+2];
+                    alpha = data[j+3];
+                    if( red >= edge.R[0] && red <= edge.R[1]
+                        && green >= edge.G[0] && green <= edge.G[1]
+                        && blue >= edge.B[0] && blue <= edge.B[1] ) {
+                        flag++;   //
+                        //break;
+                    }
+                }
+                if( flag > 100 ) {
+                    cutTop++;    //高度无效边计数
+                } else {
+                    break;       //该边扫描完毕
+                }
+            }
+
+            //扫描下边
+            for( var i = len / (xLen * 4) - 1; i >= 0; i--) {
+                var flag = 0; //该行是否有非透明点， 默认：无非透明点
+                for( var j = i * (xLen * 4); j < (i+1) * (xLen * 4); j += 4 ) {  //遍历当前边每个点
+                    red = data[j];
+                    green = data[j+1];
+                    blue = data[j+2];
+                    alpha = data[j+3];
+                    if( red >= edge.R[0] && red <= edge.R[1]
+                        && green >= edge.G[0] && green <= edge.G[1]
+                        && blue >= edge.B[0] && blue <= edge.B[1] ) {
+                        flag++;   //找到非透明点
+                        // break;
+                    }
+                }
+                if( flag > 100 ) {
+                    cutBottom++;    //高度无效边计数
+                } else {
+                    break;       //该边扫描完毕
+                }
+            }
+
+            //扫描左边
+            for( var i = 0;  i < len / (yLen * 4); i++) {
+                var flag = 0;   //该行是否有非透明点， 默认：无非透明点
+                for( var j = i * 4; j <= len - ((xLen - i) * 4); j += (xLen * 4) ) {  //遍历当前边每个点
+                    red = data[j];
+                    green = data[j+1];
+                    blue = data[j+2];
+                    alpha = data[j+3];
+                    if( red >= edge.R[0] && red <= edge.R[1]
+                        && green >= edge.G[0] && green <= edge.G[1]
+                        && blue >= edge.B[0] && blue <= edge.B[1] ) {
+                        flag++;   //找到非透明点
+                        // break;
+                    }
+                }
+                if( flag > 200 ) {
+                    cutLeft++;    //高度无效边计数
+                } else {
+                    break;       //该边扫描完毕
+                }
+            }
+
+            //扫描右边
+            for( var i = len / (yLen * 4) - 1;  i >= 0 ; i--) {
+                var flag = 0;   //该行是否有非透明点， 默认：无非透明点
+                for( var j = i * 4; j <= len - ((xLen - i) * 4); j += (xLen * 4) ) {  //遍历当前边每个点
+                    red = data[j];
+                    green = data[j+1];
+                    blue = data[j+2];
+                    alpha = data[j+3];
+                    if( red >= edge.R[0] && red <= edge.R[1]
+                        && green >= edge.G[0] && green <= edge.G[1]
+                        && blue >= edge.B[0] && blue <= edge.B[1] ) {
+                        flag++;   //找到非透明点
+                        // break;
+                    }
+                }
+                if( flag > 200 ) {
+                    cutRight++;    //高度无效边计数
+                } else {
+                    break;       //该边扫描完毕
+                }
+            }
+
+            //确定剪切区域的宽度
+            var _w = img.width - cutLeft - cutRight;
+            var _h = img.height - cutTop - cutBottom;
+            this.image.width = canvas.width = _w;
+            this.image.height = canvas.height = _h;
+
+            context.drawImage(img,cutLeft,cutTop,_w,_h,0,0,_w,_h);
+
+            this.drew = true;
+            var _imgData = canvas.toDataURL(this.getFormat());
+            callback.call(this,_imgData);
+        });
+    });
+}
 
 module.exports = SubImage;

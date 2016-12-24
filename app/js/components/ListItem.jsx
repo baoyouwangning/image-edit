@@ -140,6 +140,31 @@ var WatermarkTool = React.createClass({
     }
 });
 
+var CueGraph = React.createClass({
+    mixins: [BindingMixin],
+    getInitialState: function() {
+        return this.props.content;
+    },
+    shouldComponentUpdate: function (nextProps) {
+        console.log("update CueGraphTool");
+        return nextProps.render
+    },
+    render: function () {
+        var show = this.state.show ? "options" : "options hide";
+        
+        return <div className={show} id={this.state.id}>
+            <strong>类型：</strong>
+            {/* 一个无用的select，请写select组件 */}
+            <select>
+                <option value="alipay">某宝</option>
+            </select>
+        </div>
+    },
+    componentDidMount: function () {
+       
+    }
+});
+
 
 var ListItem = React.createClass({
     mixins: [BindingMixin],
@@ -163,6 +188,8 @@ var ListItem = React.createClass({
                 return TransforTool;
             case 5: //加水印
                 return WatermarkTool;
+            default:
+                return CueGraph
         }
     },
     handleClick: function (key,event) {
