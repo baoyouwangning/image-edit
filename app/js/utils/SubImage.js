@@ -3,6 +3,7 @@ var inheritPrototype = require('./inheritPrototype');
 var AsynObject = require('./AsynObject');
 var SubFileReader = require('./SubFileReader');
 var CORSRequest = require('./CORSRequest');
+var convolve = require('convolve');
 
 //使参数友好混合，找到src中合法的属性并将其值（必须为非isNaN)赋值给dest中对应的属性
 var mix = function (dest,src) {
@@ -716,6 +717,7 @@ SubImage.prototype.cueGraph = function (config,callback) {
             //确定剪切区域的宽度
             var _w = img.width - cutLeft - cutRight;
             var _h = img.height - cutTop - cutBottom;
+            _w = parseInt(img.width / img.height * _h);
             this.image.width = canvas.width = _w;
             this.image.height = canvas.height = _h;
 
@@ -728,6 +730,66 @@ SubImage.prototype.cueGraph = function (config,callback) {
             this.drew = true;
             var _imgData = canvas.toDataURL(this.getFormat());
             callback.call(this,_imgData);
+
+            new SubImage(_imgData,function () {
+                var img = this.obj;
+                var canvas = this.canvas;
+                var context = canvas.getContext("2d");
+                if( this.drew ) {
+                    img = SubImage.getDeepCopyOfCanvas(canvas);
+                }
+
+                //先绘图
+                canvas.width = img.width;
+                canvas.height = img.height;
+                context.drawImage(img,0,0,img.width,img.height);
+
+                //另一种方法
+                var sharpen = [
+                    [-1, -1, -1],
+                    [-1, 9, -1],
+                    [-1, -1, -1]
+                ];
+
+                var blur = [
+                    [0, .2, 0],
+                    [.2, .2, .2],
+                    [0, .2, 0],
+                ];
+
+                // factor 1 / 7
+                var motionBlur = [
+                    [1, 0, 0, 0, 0, 0, 0],
+                    [0, 1, 0, 0, 0, 0, 0],
+                    [0, 0, 1, 0, 0, 0, 0],
+                    [0, 0, 0, 1, 0, 0, 0],
+                    [0, 0, 0, 0, 1, 0, 0],
+                    [0, 0, 0, 0, 0, 1, 0],
+                    [0, 0, 0, 0, 0, 0, 1]
+                ];
+
+                // motionBlur =  [
+                //     0, 1, 0,
+                //     1,-4, 1,
+                //     0, 1, 0
+                // ];
+
+
+                var edges = [
+                    [0, -1, 0],
+                    [-1, 4, -1],
+                    [0, -1, 0]
+                ];
+
+                canvas.width = img.width;
+                canvas.height = img.height;
+                context.drawImage(img, 0, 0);
+                convolve(motionBlur).factor(1 / 7).canvas(canvas);
+
+                this.drew = true;
+                var _imgData = canvas.toDataURL(this.getFormat());
+                callback.call(this,_imgData);
+            });
         });
     });
 }

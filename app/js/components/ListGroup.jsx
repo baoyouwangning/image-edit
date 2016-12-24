@@ -60,8 +60,8 @@ var ListGroup = React.createClass({
                             B: [25,50]
                         },
                         line: {
-                            R: [40,140],
-                            G: [35,130],
+                            R: [40,100],
+                            G: [35,100],
                             B: [40,150]
                         }
                     }
