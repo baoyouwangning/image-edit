@@ -717,7 +717,7 @@ SubImage.prototype.cueGraph = function (config,callback) {
             //确定剪切区域的宽度
             var _w = img.width - cutLeft - cutRight;
             var _h = img.height - cutTop - cutBottom;
-            _w = parseInt(img.width / img.height * _h);
+            // _w = parseInt(img.width / img.height * _h);
             this.image.width = canvas.width = _w;
             this.image.height = canvas.height = _h;
 
