@@ -72,7 +72,7 @@ var AppStore = assign({},EventEmitter.prototype, {
             _this.data.lastImageData = _this.data.currentImageData;
             _this.data.current = 'resize';
         }
-        options = _extend(_this.data.option['resize'],options);
+        options = _extend(_this.data.option['resize'], options);
         image.resize(_this.data.lastImageData,options,function (imageData) {
             _this.data.currentImageData = imageData;
             _this.data.canvas = this.canvas;
@@ -156,7 +156,7 @@ var AppStore = assign({},EventEmitter.prototype, {
             _this.data.lastImageData = _this.data.currentImageData;
             _this.data.current = 'cueGraph';
         }
-        options = _extend(_this.data.option['cueGraph'],options);
+        options = _extend(_this.data.option['cueGraph'],options.alipay);
         image.cueGraph(_this.data.lastImageData,options,function (imageData) {
             _this.data.currentImageData = imageData;
             _this.data.canvas = this.canvas;
